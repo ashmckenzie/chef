@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. /etc/duplicity/config.sh
+
+restore_to_dir="$1"
+shift
+
+if [ "x$restore_to_dir" = "x" ]; then
+    echo "Usage: $0 /tmp/restore [-t 3D] [--file-to-restore /etc/]" >&2
+    exit 1
+fi
+
+duplicity "$@" "$REPOSITORY_URL" "$restore_to_dir"

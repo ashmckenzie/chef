@@ -1,0 +1,14 @@
+{
+  "nginx": {
+    "version": "1.2.1"
+  },
+
+  "postfix": {
+
+  },
+
+  "run_list": [ 
+    "recipe[main]"
+    // "recipe[main::gitlab]"
+  ]
+}

@@ -1,0 +1,51 @@
+= DESCRIPTION:
+
+Installs duplicity and sets it up for system-wide backups.
+
+= REQUIREMENTS:
+
+You may need to install additional libraries to enable duplicity to
+support the backend you choose.  You'll also need to create a
+config.sh.  The s3 and cloudfiles recipes take care of both of these
+requirements for you.
+
+= ATTRIBUTES:
+
+node[:duplicity][:passphrase] = "secret"
+node[:duplicity][:cloudfiles][:username] = "me"
+node[:duplicity][:cloudfiles][:apikey] = "abc123..."
+
+node[:duplicity][:passphrase] = "secret"
+node[:duplicity][:s3][:aws_access_key_id] = "xyzabc..."
+node[:duplicity][:s3][:aws_secret_access_key] = "xyxabc..."
+
+= USAGE:
+
+  node[:duplicity][:passphrase] = "secret"
+  node[:duplicity][:cloudfiles][:username] = "me"
+  node[:duplicity][:cloudfiles][:apikey] = "abc123..."
+  include_recipe "duplicity::cloudfiles"
+
+or...
+
+  node[:duplicity][:passphrase] = "secret"
+  node[:duplicity][:s3][:aws_access_key_id] = "xyzabc..."
+  node[:duplicity][:s3][:aws_secret_access_key] = "xyxabc..."
+  include_recipe "duplicity::s3"
+
+or...
+
+  # Create your own config.sh, and then...
+  include_recipe "duplicity"
+
+
+To customize the files backed up:
+
+  node[:duplicity][:files_cookbook] = "mycookbook"
+
+... and create your own files.txt.erb in "mycookbook".
+
+
+To do monthly full backups and nightly incremental backups:
+
+  include_recipe "duplicity::cron"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. /etc/duplicity/config.sh
+
+duplicity collection-status "$REPOSITORY_URL"

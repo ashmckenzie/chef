@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. /etc/duplicity/config.sh
+
+nice ionice -c3 duplicity remove-all-but-n-full "$FULL_BACKUPS_TO_KEEP" --force "$REPOSITORY_URL"

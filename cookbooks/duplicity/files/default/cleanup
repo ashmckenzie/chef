@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /etc/duplicity/config.sh
+
+if [ "x$1" = "x--force" ]; then
+    force=$1
+fi
+
+nice ionice -c3 duplicity cleanup $force "$REPOSITORY_URL"

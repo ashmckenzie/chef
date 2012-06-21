@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+  },
+  "name": "duplicity",
+  "maintainer_email": "marcel@oak.homeunix.org",
+  "attributes": {
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+  },
+  "platforms": {
+  },
+  "maintainer": "Marcel M. Cary",
+  "long_description": "= DESCRIPTION:\n\nInstalls duplicity and sets it up for system-wide backups.\n\n= REQUIREMENTS:\n\nYou may need to install additional libraries to enable duplicity to\nsupport the backend you choose.  You'll also need to create a\nconfig.sh.  The s3 and cloudfiles recipes take care of both of these\nrequirements for you.\n\n= ATTRIBUTES:\n\nnode[:duplicity][:passphrase] = \"secret\"\nnode[:duplicity][:cloudfiles][:username] = \"me\"\nnode[:duplicity][:cloudfiles][:apikey] = \"abc123...\"\n\nnode[:duplicity][:passphrase] = \"secret\"\nnode[:duplicity][:s3][:aws_access_key_id] = \"xyzabc...\"\nnode[:duplicity][:s3][:aws_secret_access_key] = \"xyxabc...\"\n\n= USAGE:\n\n  node[:duplicity][:passphrase] = \"secret\"\n  node[:duplicity][:cloudfiles][:username] = \"me\"\n  node[:duplicity][:cloudfiles][:apikey] = \"abc123...\"\n  include_recipe \"duplicity::cloudfiles\"\n\nor...\n\n  node[:duplicity][:passphrase] = \"secret\"\n  node[:duplicity][:s3][:aws_access_key_id] = \"xyzabc...\"\n  node[:duplicity][:s3][:aws_secret_access_key] = \"xyxabc...\"\n  include_recipe \"duplicity::s3\"\n\nor...\n\n  # Create your own config.sh, and then...\n  include_recipe \"duplicity\"\n\n\nTo customize the files backed up:\n\n  node[:duplicity][:files_cookbook] = \"mycookbook\"\n\n... and create your own files.txt.erb in \"mycookbook\".\n\n\nTo do monthly full backups and nightly incremental backups:\n\n  include_recipe \"duplicity::cron\"\n",
+  "version": "0.0.1",
+  "recommendations": {
+  },
+  "recipes": {
+  },
+  "groupings": {
+  },
+  "conflicting": {
+  },
+  "replacing": {
+  },
+  "description": "Installs/Configures duplicity for system-wide backups",
+  "providing": {
+  }
+}

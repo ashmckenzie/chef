@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. /etc/duplicity/config.sh
+
+cd / &&
+nice ionice -c3 duplicity \
+  --num-retries 100 \
+  --exclude-globbing-filelist /etc/duplicity/files.txt \
+  ./ "$REPOSITORY_URL" | logger -t duplicity
+
+#  --no-print-statistics
