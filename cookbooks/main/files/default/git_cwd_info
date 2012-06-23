@@ -15,7 +15,7 @@ if [[ "$GIT_REPO_PATH" != '' && "$GIT_REPO_PATH" != '~' && "$GIT_REPO_PATH" != "
     GIT_MODE=" +rebase"
   fi
 
-  GIT_DIRTY=""
+  GIT_DIRTY="%{^[[32m%}✓%{^[[0m%}"
 
   if [[ "$GIT_REPO_PATH" != '.' && `git ls-files -m` != "" ]]; then
     GIT_DIRTY="%{[31m%}✗%{[0m%}"
