@@ -1,0 +1,11 @@
+autoload -U colors
+colors
+
+unsetopt correct_all
+setopt prompt_subst
+
+fpath=(/etc/zsh/functions $fpath)
+autoload -U /etc/zsh/functions/*(:t)
+
+PROMPT='[$fg_bold[green]%n$reset_color@$fg_bold[cyan]%m$reset_color]-[%*]-[$(ruby_current_version)]$(git_cwd_info)-[$fg_bold[yellow]%~$reset_color]
+$ '

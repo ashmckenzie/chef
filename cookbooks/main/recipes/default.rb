@@ -127,10 +127,17 @@ directory "/etc/zsh/functions" do
 end
 
 zsh_files = {
-  :zlogin => 644,
   :git_cwd_info => 644,
   :ruby_current_version => 644
 }
+
+cookbook_file "/etc/zsh/zshenv" do
+  mode "644"
+end
+
+link "/etc/zsh/zlogin" do
+  to "/etc/zsh/zshenv"
+end
 
 zsh_files.each do |file, perms|
   cookbook_file "/etc/zsh/functions/#{file}" do
