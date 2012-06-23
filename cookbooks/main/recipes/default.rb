@@ -6,7 +6,6 @@
   libssl-dev
   libreadline-dev
   libyaml-dev
-  ruby1.8
   ntp
   ntpdate
   curl
@@ -17,12 +16,24 @@
   git-core
   ack-grep
   vim-nox
+  rsnapshot
   zsh
 }.each do |pkg|
   package pkg
 end
 
 include_recipe 'postfix'
+
+bash 'configure postfix' do
+  user 'root'
+  cwd '/tmp'
+  code <<-EOS
+postconf -e inet_interfaces=loopback-only
+postconf -e myhostname=the-rebellion
+postconf -e mydomain=the-rebellion.net
+  EOS
+end
+
 include_recipe 'nginx::source'
 
 bash 'setup ack alternative' do
@@ -89,13 +100,44 @@ gem_package 'activesupport'
 gem_package 'bundler'
 gem_package 'unicorn'
 
-include_recipe 'duplicity'
-include_recipe "duplicity::cron"
+directory "/var/backups/rsnapshot" do
+  mode "2755"
+end
 
-template "/etc/duplicity/config.sh" do
-  source "duplicity-config.sh.erb"
-  variables :full_backups_to_keep => node[:duplicity][:full_backups_to_keep]
+cookbook_file "/etc/cron.d/rsnapshot" do
+  source "rsnapshot.cron"
   mode "0644"
+end
+
+cookbook_file "/etc/rsnapshot.conf" do
+  mode "0644"
+end
+
+cookbook_file "/etc/profile.d/ruby.sh" do
+  source "ruby.sh"
+  mode "0644"
+end
+
+# zsh prompt
+#
+directory "/etc/zsh/functions" do
   owner "root"
-  group "adm"
+  group "root"
+  mode "755"
+end
+
+zsh_files = {
+  :zlogin => 644,
+  :git_cwd_info => 644,
+  :ruby_current_version => 644
+}
+
+zsh_files.each do |file, perms|
+  cookbook_file "/etc/zsh/functions/#{file}" do
+    mode "#{perms}"
+  end
+end
+
+cookbook_file "/etc/zsh/newuser.zshrc.recommended" do
+  mode "644"
 end
