@@ -20,7 +20,8 @@
 #
 include_attribute "nginx"
 
-set[:nginx][:source][:prefix]                  = "/opt/nginx-#{node[:nginx][:version]}"
+set[:nginx][:source][:base]                    = "/opt/nginx"
+set[:nginx][:source][:prefix]                  = "#{node[:nginx][:source][:base]}-#{node[:nginx][:version]}"
 set[:nginx][:source][:conf_path]               = "#{node[:nginx][:dir]}/nginx.conf"
 set[:nginx][:source][:default_configure_flags] = [
   "--prefix=#{node[:nginx][:source][:prefix]}",

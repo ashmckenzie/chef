@@ -34,8 +34,6 @@ postconf -e mydomain=the-rebellion.net
   EOS
 end
 
-include_recipe 'nginx::source'
-
 bash 'setup ack alternative' do
   user 'root'
   cwd '/tmp'
@@ -53,6 +51,8 @@ EOSS
 dpkg-reconfigure locales > /dev/null 2>&1
   EOS
 end
+
+# include_recipe 'nginx::source'
 
 bash 'ensure all nginx sites are owned by apps:apps and 644' do
   user 'root'
@@ -148,3 +148,21 @@ end
 cookbook_file "/etc/zsh/newuser.zshrc.recommended" do
   mode "644"
 end
+
+# # elasticsearch
+# #
+# remote_file "/tmp/elasticsearch-0.19.9.deb" do
+#   source "http://cloud.github.com/downloads/elasticsearch/elasticsearch/elasticsearch-0.19.9.deb"
+#   mode 0644
+#   checksum "1b75559db4e77f3ee92cac8a3e3e0f64c00adebb81977c16dcc883520a518b7b"
+# end
+
+# dpkg_package "elasticsearch" do
+#   source "/tmp/elasticsearch-0.19.9.deb"
+#   action :install
+# end
+
+# # graylog2
+# #
+# include_recipe "graylog2::server"
+# include_recipe "graylog2::web_interface"

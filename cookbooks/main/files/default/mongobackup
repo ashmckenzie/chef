@@ -10,4 +10,4 @@ DAYS_AGO=5
 
 # Cleanup
 #
-find ${BACKUP_DIR}/mongodump-* -maxdepth 1 -type d -mtime ${DAYS_AGO} -exec rm -rf '{}' ';'
+find ${BACKUP_DIR}/mongodump-* -maxdepth 0 -type d -mtime ${DAYS_AGO} -exec rm -rf '{}' ';'
